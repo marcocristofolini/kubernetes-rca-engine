@@ -1,11 +1,11 @@
 package model
 
 type Signal struct {
-	Type     string `json:"type"`
-	Reason   string `json:"reason,omitempty"`
-	Message  string `json:"message,omitempty"`
+	Type      string `json:"type"`
+	Reason    string `json:"reason,omitempty"`
+	Message   string `json:"message,omitempty"`
 	Container string `json:"container,omitempty"`
-	ExitCode int    `json:"exitCode,omitempty"`
+	ExitCode  int    `json:"exitCode,omitempty"`
 }
 
 type Incident struct {

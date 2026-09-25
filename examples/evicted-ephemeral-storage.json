@@ -1,0 +1,12 @@
+{
+  "namespace": "payments",
+  "workload": "api",
+  "pod": "api-7b9f6c7b78-q2x9w",
+  "signals": [
+    {
+      "type": "event",
+      "reason": "Evicted",
+      "message": "The node was low on resource: ephemeral-storage."
+    }
+  ]
+}

@@ -7,16 +7,11 @@ import (
 )
 
 func TestEphemeralStorageEviction(t *testing.T) {
-	incident := model.Incident{
-		Pod: "api-7b9f",
-		Signals: []model.Signal{
-			{
-				Type:    "event",
-				Reason:  "Evicted",
-				Message: "The node was low on resource: ephemeral-storage.",
-			},
-		},
-	}
+	incident := model.Incident{Signals: []model.Signal{{
+		Type: "event",
+		Reason: "Evicted",
+		Message: "The node was low on resource: ephemeral-storage.",
+	}}}
 
 	findings := Analyze(incident)
 	if len(findings) == 0 {
@@ -31,9 +26,7 @@ func TestEphemeralStorageEviction(t *testing.T) {
 }
 
 func TestOOMKilled(t *testing.T) {
-	incident := model.Incident{
-		Signals: []model.Signal{{Type: "termination", Reason: "OOMKilled"}},
-	}
+	incident := model.Incident{Signals: []model.Signal{{Type: "termination", Reason: "OOMKilled"}}}
 	findings := Analyze(incident)
 	if len(findings) != 1 || findings[0].Cause != "Container exceeded its memory limit" {
 		t.Fatalf("unexpected findings: %#v", findings)

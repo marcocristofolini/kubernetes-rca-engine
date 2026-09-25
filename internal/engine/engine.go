@@ -16,12 +16,9 @@ func Analyze(i model.Incident) []model.Finding {
 
 		if reason == "evicted" && strings.Contains(message, "ephemeral-storage") {
 			findings = append(findings, model.Finding{
-				Cause:      "Node ephemeral storage pressure",
+				Cause: "Node ephemeral storage pressure",
 				Confidence: 0.98,
-				Evidence: []string{
-					"Pod was evicted",
-					"Eviction message mentions ephemeral-storage",
-				},
+				Evidence: []string{"Pod was evicted", "Eviction message mentions ephemeral-storage"},
 				Remediation: []string{
 					"Inspect node ephemeral-storage usage and kubelet eviction signals",
 					"Set realistic ephemeral-storage requests and limits",
@@ -32,9 +29,9 @@ func Analyze(i model.Incident) []model.Finding {
 
 		if reason == "oomkilled" || strings.Contains(message, "oomkilled") {
 			findings = append(findings, model.Finding{
-				Cause:      "Container exceeded its memory limit",
+				Cause: "Container exceeded its memory limit",
 				Confidence: 0.95,
-				Evidence:   []string{"Container termination indicates OOMKilled"},
+				Evidence: []string{"Container termination indicates OOMKilled"},
 				Remediation: []string{
 					"Compare memory working set with requests and limits",
 					"Check for memory leaks or load-related growth",
@@ -45,9 +42,9 @@ func Analyze(i model.Incident) []model.Finding {
 
 		if reason == "crashloopbackoff" {
 			findings = append(findings, model.Finding{
-				Cause:      "Repeated container startup failure",
+				Cause: "Repeated container startup failure",
 				Confidence: 0.72,
-				Evidence:   []string{"Pod reports CrashLoopBackOff"},
+				Evidence: []string{"Pod reports CrashLoopBackOff"},
 				Remediation: []string{
 					"Inspect previous container logs and termination state",
 					"Check configuration, dependency reachability and startup probes",
@@ -59,6 +56,5 @@ func Analyze(i model.Incident) []model.Finding {
 	sort.SliceStable(findings, func(a, b int) bool {
 		return findings[a].Confidence > findings[b].Confidence
 	})
-
 	return findings
 }

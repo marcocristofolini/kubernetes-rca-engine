@@ -2,23 +2,15 @@
 
 Evidence-driven **Root Cause Analysis for Kubernetes incidents**.
 
-The project is designed around a simple principle: **collect deterministic evidence first, infer second**. AI can help summarize or rank hypotheses, but the diagnostic record should remain inspectable by an engineer.
-
-## Why this exists
-
-Kubernetes incidents rarely expose one clean signal. A production failure may involve pod state, kubelet events, resource pressure, application logs, metrics, traces and dependency behavior at the same time.
-
-The goal of this project is to turn those signals into a structured incident timeline and a ranked set of evidence-backed findings.
+The project follows one principle: **collect deterministic evidence first, infer second**. AI may summarize or rank hypotheses, but the diagnostic record remains inspectable by an engineer.
 
 ## Current v0.1
 
-The first implementation provides a small deterministic rules engine that analyzes normalized incident JSON and recognizes common Kubernetes failure patterns including:
+The first implementation contains a deterministic rules engine that analyzes normalized incident JSON and recognizes:
 
 - pod eviction caused by ephemeral-storage pressure;
 - OOMKilled containers;
 - CrashLoopBackOff symptoms.
-
-It is intentionally dependency-light so that the correlation model can evolve independently from collectors.
 
 ## Quick start
 
@@ -45,47 +37,27 @@ flowchart LR
     X --> A[Optional AI Summary]
 ```
 
-See [docs/architecture.md](docs/architecture.md) for the target architecture.
+See [docs/architecture.md](docs/architecture.md).
 
 ## Design principles
 
-- **Evidence first:** every finding must point to observable signals.
-- **Explainability:** confidence is never a substitute for evidence.
-- **Symptom vs. cause:** a CrashLoopBackOff is a state, not automatically the root cause.
-- **No production mutation:** analysis should default to read-only access.
-- **Progressive enrichment:** metrics, logs and traces enrich Kubernetes-native evidence.
-- **AI is optional:** deterministic diagnostics remain useful without an LLM.
-
-## Example output
-
-```json
-{
-  "cause": "Node ephemeral storage pressure",
-  "confidence": 0.98,
-  "evidence": [
-    "Pod was evicted",
-    "Eviction message mentions ephemeral-storage"
-  ]
-}
-```
+- **Evidence first** — every finding points to observable signals.
+- **Explainability** — confidence never replaces evidence.
+- **Symptom vs. cause** — CrashLoopBackOff is a state, not automatically a root cause.
+- **Read-only by default** — diagnostics should not mutate production.
+- **Progressive enrichment** — metrics, logs and traces enrich Kubernetes-native evidence.
+- **AI is optional** — deterministic diagnostics remain useful without an LLM.
 
 ## Roadmap
 
-- Kubernetes API collector using client-go
+- Kubernetes API collector with client-go
 - event and owner-chain correlation
-- node pressure analysis
-- restart / termination-state analysis
-- Prometheus evidence provider
-- Loki and Tempo evidence providers
-- incident timeline
-- dependency and topology graph
+- node pressure and termination-state analysis
+- Prometheus, Loki and Tempo evidence providers
+- incident timeline and topology graph
 - confidence calibration
 - explainable AI summaries
 - Helm deployment
-
-## Safety
-
-Use synthetic or sanitized data in examples. Never commit kubeconfigs, tokens, production logs containing customer data or cloud credentials.
 
 ## License
 
