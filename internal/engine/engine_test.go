@@ -8,8 +8,8 @@ import (
 
 func TestEphemeralStorageEviction(t *testing.T) {
 	incident := model.Incident{Signals: []model.Signal{{
-		Type: "event",
-		Reason: "Evicted",
+		Type:    "event",
+		Reason:  "Evicted",
 		Message: "The node was low on resource: ephemeral-storage.",
 	}}}
 
