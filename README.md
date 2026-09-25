@@ -1,5 +1,9 @@
 # Kubernetes RCA Engine
 
+[![CI](https://github.com/marcocristofolini/kubernetes-rca-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/marcocristofolini/kubernetes-rca-engine/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/marcocristofolini/kubernetes-rca-engine/actions/workflows/codeql.yml/badge.svg)](https://github.com/marcocristofolini/kubernetes-rca-engine/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Evidence-driven **Root Cause Analysis for Kubernetes incidents**.
 
 The project follows one principle: **collect deterministic evidence first, infer second**. AI may summarize or rank hypotheses, but the diagnostic record remains inspectable by an engineer.
